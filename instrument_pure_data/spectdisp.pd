@@ -1,0 +1,58 @@
+#N canvas 0 22 472 538 10;
+#X obj 19 61 inlet~;
+#X obj 95 214 inlet;
+#X obj 29 92 rfft~;
+#X obj 29 125 *~;
+#X obj 60 125 *~;
+#X obj 29 155 sqrt~;
+#X obj 332 109 block~ 4096 1;
+#X obj 29 181 biquad~ 0 0 0 0 1;
+#X text 93 93 Fourier series;
+#X text 98 146 magnitude;
+#X text 96 131 calculate;
+#X text 21 3 This subpatch computes the spectrum of the incoming signal
+with a (rectangular windowed) FFT. FFTs aren't properly introduced
+until much later.;
+#X text 83 61 signal to analyze;
+#X text 192 166 delay two samples;
+#X text 191 182 for better graphing;
+#X obj 16 425 samplerate~;
+#X obj 16 402 bng 18 250 50 0 empty empty empty 0 -6 0 8 -262144 -1
+-1;
+#X floatatom 16 472 5 0 0 0 - - -;
+#X obj 16 448 / 256;
+#X obj 16 378 loadbang;
+#X floatatom 16 541 5 0 0 0 - - -;
+#X obj 24 494 s fundamental;
+#X obj 16 517 ftom;
+#X text 14 319 At load time \, calculate a good choice of fundamental
+frequency for showing spectra: the 16th bin in a 4096-point spectrum
+\, so SR*16/4096 or SR/256.;
+#X text 145 216 "bang" into this inlet to graph it;
+#X floatatom 191 480 5 0 0 0 - - -;
+#X obj 191 456 / 4096;
+#X text 187 425 One bin is SR/4096:;
+#X text 72 540 <-just out of curiosity \, here's the fundamental pitch
+;
+#X obj 191 502 s freq-step;
+#X obj 95 248 tabwrite~ spectrum;
+#X connect 0 0 2 0;
+#X connect 1 0 30 0;
+#X connect 2 0 3 0;
+#X connect 2 0 3 1;
+#X connect 2 1 4 0;
+#X connect 2 1 4 1;
+#X connect 3 0 5 0;
+#X connect 4 0 5 0;
+#X connect 5 0 7 0;
+#X connect 7 0 30 0;
+#X connect 15 0 18 0;
+#X connect 15 0 26 0;
+#X connect 16 0 15 0;
+#X connect 17 0 21 0;
+#X connect 17 0 22 0;
+#X connect 18 0 17 0;
+#X connect 19 0 16 0;
+#X connect 22 0 20 0;
+#X connect 25 0 29 0;
+#X connect 26 0 25 0;
